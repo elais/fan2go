@@ -160,7 +160,7 @@ func (f *fanController) Run(ctx context.Context) error {
 
 func (f *fanController) UpdateFanSpeed() error {
 	fan := f.fan
-	target := f.calculateTargetPwm()
+	target := util.Round(f.calculateTargetPwm())
 	if target >= 0 {
 		err := f.setPwm(target)
 		if err != nil {
@@ -295,10 +295,10 @@ func (f *fanController) calculateTargetPwm() int {
 
 	// map the target value to the possible range of this fan
 	maxPwm := fan.GetMaxPwm()
-	minPwm := fan.GetMinPwm()
+	// minPwm := fan.GetMinPwm()
 
 	// TODO: this assumes a linear curve, but it might be something else
-	target = minPwm + int((float64(target)/fans.MaxPwmValue)*(float64(maxPwm)-float64(minPwm)))
+	// target = minPwm + int((float64(target)/fans.MaxPwmValue)*(float64(maxPwm)-float64(minPwm)))
 
 	if f.lastSetPwm != nil {
 		lastSetPwm := *(f.lastSetPwm)

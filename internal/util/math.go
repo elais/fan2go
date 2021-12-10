@@ -3,6 +3,7 @@ package util
 import (
 	"fmt"
 	"github.com/markusressel/fan2go/internal/ui"
+	"math"
 	"sort"
 	"strconv"
 )
@@ -29,6 +30,13 @@ func HexString(hex string) string {
 		return hex
 	}
 	return fmt.Sprintf("%X", value)
+}
+
+// Round rounds the pwm value to a percentage of the pwm between 0 and 1 rounded
+// to two decimal places.
+func Round(pwm int) int {
+	duty := math.Round((float64(pwm) / 255.0) * 100) / 100
+	return int(math.Round(duty * 255))
 }
 
 // Ratio calculates the ration that target has in comparison to rangeMin and rangeMax

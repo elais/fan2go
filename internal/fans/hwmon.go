@@ -88,8 +88,8 @@ func (fan HwMonFan) GetPwm() int {
 }
 
 func (fan *HwMonFan) SetPwm(pwm int) (err error) {
-	ui.Debug("Setting Fan PWM of '%s' to %d ...", fan.GetId(), pwm)
-	err = util.WriteIntToFile(pwm, fan.PwmOutput)
+	ui.Debug("Setting Fan PWM of '%s' to %d ...", fan.GetId(), util.Round(pwm))
+	err = util.WriteIntToFile(util.Round(pwm), fan.PwmOutput)
 	return err
 }
 
